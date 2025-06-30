@@ -1,24 +1,31 @@
 import React, { useState } from "react";
 import PropertyAddressModal from "./PropertyAddressModal";
 import LeasingInfoModal from "./LeasingInfoModal";
+import ChargesModal from "./ChargesModal";
+import RentReminderModal from "./RentReminderModal";
 
 const CondominiumsForm = () => {
   const [featuredPhoto, setFeaturedPhoto] = useState(null);
   const [featuredPhotos, setFeaturedPhotos] = useState([]);
   const [morePhotos, setMorePhotos] = useState([]);
   const [video, setVideo] = useState(null);
-  
+
   // Modal states
-  const [isPropertyAddressModalOpen, setIsPropertyAddressModalOpen] = useState(false);
+  const [isPropertyAddressModalOpen, setIsPropertyAddressModalOpen] =
+    useState(false);
   const [isLeasingInfoModalOpen, setIsLeasingInfoModalOpen] = useState(false);
-  
+  const [isChargesModalOpen, setIsChargesModalOpen] = useState(false); // Add this state
+
   // Data states
   const [propertyAddress, setPropertyAddress] = useState(null);
   const [leasingInfo, setLeasingInfo] = useState(null);
+  const [charges, setCharges] = useState(null);
+  const [isRentReminderModalOpen, setIsRentReminderModalOpen] = useState(false);
+  const [rentReminder, setRentReminder] = useState(null);
 
-  const handlePhotoUpload = (file, index, type = 'featured') => {
+  const handlePhotoUpload = (file, index, type = "featured") => {
     if (file) {
-      if (type === 'featured') {
+      if (type === "featured") {
         const newFeaturedPhotos = [...featuredPhotos];
         newFeaturedPhotos[index] = file;
         setFeaturedPhotos(newFeaturedPhotos);
@@ -30,15 +37,23 @@ const CondominiumsForm = () => {
     }
   };
 
-  const UploadBox = ({ isLarge = false, label = "", subtext = "", onChange, hasFile = false }) => (
-    <div className={`
-      ${isLarge ? 'aspect-[4/3]' : 'aspect-square'} 
+  const UploadBox = ({
+    isLarge = false,
+    label = "",
+    subtext = "",
+    onChange,
+    hasFile = false,
+  }) => (
+    <div
+      className={`
+      ${isLarge ? "aspect-[4/3]" : "aspect-square"} 
       border-2 border-dashed border-gray-300 rounded-lg 
       flex flex-col justify-center items-center text-center text-gray-400 
       relative hover:border-gray-400 transition-colors cursor-pointer
-      ${hasFile ? 'bg-gray-50' : 'bg-white'}
+      ${hasFile ? "bg-gray-50" : "bg-white"}
       shadow-sm
-    `}>
+    `}
+    >
       <input
         type="file"
         accept="image/*"
@@ -46,11 +61,25 @@ const CondominiumsForm = () => {
         className="absolute inset-0 opacity-0 cursor-pointer"
       />
       <div className="text-2xl mb-2">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="mx-auto">
-          <path d="M12 15V3m0 12l-4-4m4 4l4-4M2 17l.621 2.485A2 2 0 0 0 4.561 21h14.878a2 2 0 0 0 1.94-1.515L22 17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          className="mx-auto"
+        >
+          <path
+            d="M12 15V3m0 12l-4-4m4 4l4-4M2 17l.621 2.485A2 2 0 0 0 4.561 21h14.878a2 2 0 0 0 1.94-1.515L22 17"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
         </svg>
       </div>
-      {label && <div className="text-sm font-medium text-gray-600 mb-1">{label}</div>}
+      {label && (
+        <div className="text-sm font-medium text-gray-600 mb-1">{label}</div>
+      )}
       {subtext && <div className="text-xs text-gray-400">{subtext}</div>}
     </div>
   );
@@ -91,6 +120,15 @@ const CondominiumsForm = () => {
     setIsLeasingInfoModalOpen(false);
   };
 
+  // Add charges modal handlers
+  const handleOpenChargesModal = () => {
+    setIsChargesModalOpen(true);
+  };
+
+  const handleCloseChargesModal = () => {
+    setIsChargesModalOpen(false);
+  };
+
   // Save handlers
   const handleSaveAddress = (addressData) => {
     setPropertyAddress(addressData);
@@ -100,6 +138,15 @@ const CondominiumsForm = () => {
     setLeasingInfo(leasingData);
   };
 
+  // Add charges save handler
+  const handleSaveCharges = (chargesData) => {
+    setCharges(chargesData);
+  };
+
+  const handleOpenRentReminderModal = () => setIsRentReminderModalOpen(true);
+  const handleCloseRentReminderModal = () => setIsRentReminderModalOpen(false);
+  const handleSaveRentReminder = (data) => setRentReminder(data);
+
   // Helper function to determine which modal to open
   const handleAddClick = (label) => {
     switch (label) {
@@ -108,6 +155,12 @@ const CondominiumsForm = () => {
         break;
       case "Leasing info":
         handleOpenLeasingInfoModal();
+        break;
+      case "Charges": // Add this case
+        handleOpenChargesModal();
+        break;
+      case "Rent frequency & payment reminder":
+        handleOpenRentReminderModal();
         break;
       default:
         // Handle other modals here in the future
@@ -120,13 +173,22 @@ const CondominiumsForm = () => {
   const getDisplayText = (label) => {
     switch (label) {
       case "Property address":
-        return propertyAddress 
+        return propertyAddress
           ? `${propertyAddress.propertyName}, ${propertyAddress.streetAddress}`
           : null;
       case "Leasing info":
-        return leasingInfo 
+        return leasingInfo
           ? `${leasingInfo.leasingManagerName} - ${leasingInfo.leasingManagerEmail}`
           : null;
+      case "Charges": // Add this case
+        return charges
+          ? `App fee: $${charges.applicationFee}, Admin fee: $${charges.adminFee}`
+          : null;
+      case "Rent frequency & payment reminder":
+        return rentReminder
+          ? `${rentReminder.frequency}, Reminder: ${rentReminder.reminderDate}, Due: ${rentReminder.dueDate}`
+          : null;
+
       default:
         return null;
     }
@@ -148,7 +210,7 @@ const CondominiumsForm = () => {
         <div className="space-y-4">
           {leftFields.map(([label, required], idx) => {
             const displayText = getDisplayText(label);
-            
+
             return (
               <div
                 key={idx}
@@ -159,7 +221,9 @@ const CondominiumsForm = () => {
                   {required ? (
                     <span className="text-red-500"> (Required)</span>
                   ) : (
-                    <span className="text-gray-500 text-sm ml-1">(Optional)</span>
+                    <span className="text-gray-500 text-sm ml-1">
+                      (Optional)
+                    </span>
                   )}
                 </span>
                 {displayText ? (
@@ -198,7 +262,7 @@ const CondominiumsForm = () => {
                 {label}
                 <span className="text-gray-500 text-sm ml-1">(Optional)</span>
               </span>
-              <button 
+              <button
                 onClick={() => handleAddClick(label)}
                 className="text-blue-600 text-base font-medium"
               >
@@ -213,7 +277,9 @@ const CondominiumsForm = () => {
       <div className="mb-10">
         <h3 className="text-lg font-medium mb-4 text-gray-900">
           Property gallery{" "}
-          <span className="text-sm text-gray-500 font-normal">(It's not unit photo)</span>
+          <span className="text-sm text-gray-500 font-normal">
+            (It's not unit photo)
+          </span>
           <span className="text-red-500">*</span>
         </h3>
 
@@ -223,7 +289,7 @@ const CondominiumsForm = () => {
             <label className="text-sm font-medium mb-3 block text-gray-700">
               Featured photos <span className="text-red-500">*</span>
             </label>
-            
+
             <div className="grid grid-cols-3 gap-3">
               {/* Cover Photo - Takes 2 rows */}
               <div className="row-span-2">
@@ -240,7 +306,9 @@ const CondominiumsForm = () => {
               {[...Array(4)].map((_, index) => (
                 <div key={index}>
                   <UploadBox
-                    onChange={(e) => handlePhotoUpload(e.target.files[0], index, 'featured')}
+                    onChange={(e) =>
+                      handlePhotoUpload(e.target.files[0], index, "featured")
+                    }
                     hasFile={!!featuredPhotos[index]}
                   />
                 </div>
@@ -251,14 +319,19 @@ const CondominiumsForm = () => {
           {/* More Photos Section */}
           <div className="flex-1">
             <label className="text-sm font-medium mb-3 block text-gray-700">
-              More photos <span className="text-sm text-gray-500 font-normal">(optional)</span>
+              More photos{" "}
+              <span className="text-sm text-gray-500 font-normal">
+                (optional)
+              </span>
             </label>
-            
+
             <div className="grid grid-cols-4 gap-3">
               {[...Array(8)].map((_, index) => (
                 <div key={index}>
                   <UploadBox
-                    onChange={(e) => handlePhotoUpload(e.target.files[0], index, 'more')}
+                    onChange={(e) =>
+                      handlePhotoUpload(e.target.files[0], index, "more")
+                    }
                     hasFile={!!morePhotos[index]}
                   />
                 </div>
@@ -307,6 +380,21 @@ const CondominiumsForm = () => {
         <LeasingInfoModal
           onClose={handleCloseLeasingInfoModal}
           onSave={handleSaveLeasingInfo}
+        />
+      )}
+
+      {/* Add ChargesModal */}
+      {isChargesModalOpen && (
+        <ChargesModal
+          onClose={handleCloseChargesModal}
+          onSave={handleSaveCharges}
+        />
+      )}
+
+      {isRentReminderModalOpen && (
+        <RentReminderModal
+          onClose={handleCloseRentReminderModal}
+          onSave={handleSaveRentReminder}
         />
       )}
     </div>
