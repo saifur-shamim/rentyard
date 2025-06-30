@@ -1,13 +1,20 @@
 import React, { useState } from "react";
 import PropertyAddressModal from "./PropertyAddressModal";
+import LeasingInfoModal from "./LeasingInfoModal";
 
 const CondominiumsForm = () => {
   const [featuredPhoto, setFeaturedPhoto] = useState(null);
   const [featuredPhotos, setFeaturedPhotos] = useState([]);
   const [morePhotos, setMorePhotos] = useState([]);
   const [video, setVideo] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  
+  // Modal states
+  const [isPropertyAddressModalOpen, setIsPropertyAddressModalOpen] = useState(false);
+  const [isLeasingInfoModalOpen, setIsLeasingInfoModalOpen] = useState(false);
+  
+  // Data states
   const [propertyAddress, setPropertyAddress] = useState(null);
+  const [leasingInfo, setLeasingInfo] = useState(null);
 
   const handlePhotoUpload = (file, index, type = 'featured') => {
     if (file) {
@@ -67,16 +74,62 @@ const CondominiumsForm = () => {
     ["Utilities provider"],
   ];
 
-  const handleOpenModal = () => {
-    setIsModalOpen(true);
+  // Modal handlers
+  const handleOpenPropertyAddressModal = () => {
+    setIsPropertyAddressModalOpen(true);
   };
 
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
+  const handleClosePropertyAddressModal = () => {
+    setIsPropertyAddressModalOpen(false);
   };
 
+  const handleOpenLeasingInfoModal = () => {
+    setIsLeasingInfoModalOpen(true);
+  };
+
+  const handleCloseLeasingInfoModal = () => {
+    setIsLeasingInfoModalOpen(false);
+  };
+
+  // Save handlers
   const handleSaveAddress = (addressData) => {
     setPropertyAddress(addressData);
+  };
+
+  const handleSaveLeasingInfo = (leasingData) => {
+    setLeasingInfo(leasingData);
+  };
+
+  // Helper function to determine which modal to open
+  const handleAddClick = (label) => {
+    switch (label) {
+      case "Property address":
+        handleOpenPropertyAddressModal();
+        break;
+      case "Leasing info":
+        handleOpenLeasingInfoModal();
+        break;
+      default:
+        // Handle other modals here in the future
+        console.log(`Opening modal for: ${label}`);
+        break;
+    }
+  };
+
+  // Helper function to display saved data
+  const getDisplayText = (label) => {
+    switch (label) {
+      case "Property address":
+        return propertyAddress 
+          ? `${propertyAddress.propertyName}, ${propertyAddress.streetAddress}`
+          : null;
+      case "Leasing info":
+        return leasingInfo 
+          ? `${leasingInfo.leasingManagerName} - ${leasingInfo.leasingManagerEmail}`
+          : null;
+      default:
+        return null;
+    }
   };
 
   return (
@@ -93,31 +146,45 @@ const CondominiumsForm = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
         {/* Left column */}
         <div className="space-y-4">
-          {leftFields.map(([label, required], idx) => (
-            <div
-              key={idx}
-              className="flex justify-between items-center border rounded p-4"
-            >
-              <span className="text-base">
-                {label}
-                {required ? (
-                  <span className="text-red-500"> (Required)</span>
+          {leftFields.map(([label, required], idx) => {
+            const displayText = getDisplayText(label);
+            
+            return (
+              <div
+                key={idx}
+                className="flex justify-between items-center border rounded p-4"
+              >
+                <span className="text-base">
+                  {label}
+                  {required ? (
+                    <span className="text-red-500"> (Required)</span>
+                  ) : (
+                    <span className="text-gray-500 text-sm ml-1">(Optional)</span>
+                  )}
+                </span>
+                {displayText ? (
+                  <div className="flex items-center gap-2">
+                    <span className="text-gray-700 text-sm max-w-48 truncate">
+                      {displayText}
+                    </span>
+                    <button
+                      onClick={() => handleAddClick(label)}
+                      className="text-blue-600 text-sm font-medium"
+                    >
+                      Edit
+                    </button>
+                  </div>
                 ) : (
-                  <span className="text-gray-500 text-sm ml-1">(Optional)</span>
+                  <button
+                    onClick={() => handleAddClick(label)}
+                    className="text-blue-600 text-base font-medium"
+                  >
+                    + Add
+                  </button>
                 )}
-              </span>
-              {label === "Property address" && propertyAddress ? (
-                <span className="text-gray-700">{propertyAddress.propertyName}, {propertyAddress.streetAddress}</span>
-              ) : (
-                <button
-                  onClick={handleOpenModal}
-                  className="text-blue-600 text-base font-medium"
-                >
-                  + Add
-                </button>
-              )}
-            </div>
-          ))}
+              </div>
+            );
+          })}
         </div>
 
         {/* Right column */}
@@ -131,7 +198,10 @@ const CondominiumsForm = () => {
                 {label}
                 <span className="text-gray-500 text-sm ml-1">(Optional)</span>
               </span>
-              <button className="text-blue-600 text-base font-medium">
+              <button 
+                onClick={() => handleAddClick(label)}
+                className="text-blue-600 text-base font-medium"
+              >
                 + Add
               </button>
             </div>
@@ -225,10 +295,18 @@ const CondominiumsForm = () => {
         </button>
       </div>
 
-      {isModalOpen && (
+      {/* Modals */}
+      {isPropertyAddressModalOpen && (
         <PropertyAddressModal
-          onClose={handleCloseModal}
+          onClose={handleClosePropertyAddressModal}
           onSave={handleSaveAddress}
+        />
+      )}
+
+      {isLeasingInfoModalOpen && (
+        <LeasingInfoModal
+          onClose={handleCloseLeasingInfoModal}
+          onSave={handleSaveLeasingInfo}
         />
       )}
     </div>
