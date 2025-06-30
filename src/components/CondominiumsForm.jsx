@@ -3,6 +3,9 @@ import PropertyAddressModal from "./PropertyAddressModal";
 import LeasingInfoModal from "./LeasingInfoModal";
 import ChargesModal from "./ChargesModal";
 import RentReminderModal from "./RentReminderModal";
+import ApplicationAgreementModal from "./ApplicationAgreementModal";
+import AboutPropertyModal from "./AboutPropertyModal";
+import PetFeesModal from "./PetFeesModal";
 
 const CondominiumsForm = () => {
   const [featuredPhoto, setFeaturedPhoto] = useState(null);
@@ -14,7 +17,7 @@ const CondominiumsForm = () => {
   const [isPropertyAddressModalOpen, setIsPropertyAddressModalOpen] =
     useState(false);
   const [isLeasingInfoModalOpen, setIsLeasingInfoModalOpen] = useState(false);
-  const [isChargesModalOpen, setIsChargesModalOpen] = useState(false); // Add this state
+  const [isChargesModalOpen, setIsChargesModalOpen] = useState(false);
 
   // Data states
   const [propertyAddress, setPropertyAddress] = useState(null);
@@ -22,6 +25,16 @@ const CondominiumsForm = () => {
   const [charges, setCharges] = useState(null);
   const [isRentReminderModalOpen, setIsRentReminderModalOpen] = useState(false);
   const [rentReminder, setRentReminder] = useState(null);
+
+  const [isApplicationAgreementModalOpen, setIsApplicationAgreementModalOpen] =
+    useState(false);
+  const [applicationAgreement, setApplicationAgreement] = useState(null);
+
+  const [isAboutPropertyModalOpen, setIsAboutPropertyModalOpen] =
+    useState(false);
+  const [aboutProperty, setAboutProperty] = useState(null);
+  const [isPetFeesModalOpen, setIsPetFeesModalOpen] = useState(false);
+  const [petFees, setPetFees] = useState(null);
 
   const handlePhotoUpload = (file, index, type = "featured") => {
     if (file) {
@@ -147,6 +160,21 @@ const CondominiumsForm = () => {
   const handleCloseRentReminderModal = () => setIsRentReminderModalOpen(false);
   const handleSaveRentReminder = (data) => setRentReminder(data);
 
+  const handleOpenApplicationAgreementModal = () =>
+    setIsApplicationAgreementModalOpen(true);
+  const handleCloseApplicationAgreementModal = () =>
+    setIsApplicationAgreementModalOpen(false);
+  const handleSaveApplicationAgreement = (data) =>
+    setApplicationAgreement(data);
+  const handleOpenAboutPropertyModal = () => setIsAboutPropertyModalOpen(true);
+  const handleCloseAboutPropertyModal = () =>
+    setIsAboutPropertyModalOpen(false);
+  const handleSaveAboutProperty = (text) => setAboutProperty(text);
+
+  const handleOpenPetFeesModal = () => setIsPetFeesModalOpen(true);
+  const handleClosePetFeesModal = () => setIsPetFeesModalOpen(false);
+  const handleSavePetFees = (data) => setPetFees(data);
+
   // Helper function to determine which modal to open
   const handleAddClick = (label) => {
     switch (label) {
@@ -162,6 +190,16 @@ const CondominiumsForm = () => {
       case "Rent frequency & payment reminder":
         handleOpenRentReminderModal();
         break;
+      case "Application agreement":
+        handleOpenApplicationAgreementModal();
+        break;
+      case "About the property":
+        handleOpenAboutPropertyModal();
+        break;
+      case "Pet fees":
+        handleOpenPetFeesModal();
+        break;
+
       default:
         // Handle other modals here in the future
         console.log(`Opening modal for: ${label}`);
@@ -187,6 +225,18 @@ const CondominiumsForm = () => {
       case "Rent frequency & payment reminder":
         return rentReminder
           ? `${rentReminder.frequency}, Reminder: ${rentReminder.reminderDate}, Due: ${rentReminder.dueDate}`
+          : null;
+      case "Application agreement":
+        return applicationAgreement
+          ? `${applicationAgreement.pdfFile?.name || "Agreement uploaded"}${
+              applicationAgreement.acceptInternational ? " (Accepts intl.)" : ""
+            }`
+          : null;
+      case "About the property":
+        return aboutProperty ? `${aboutProperty.slice(0, 40)}...` : null;
+      case "Pet fees":
+        return petFees
+          ? `${petFees.petType}, Fee: ${petFees.oneTimeFee}, Deposit: ${petFees.securityDeposit}, Rent: ${petFees.monthlyRent}`
           : null;
 
       default:
@@ -395,6 +445,27 @@ const CondominiumsForm = () => {
         <RentReminderModal
           onClose={handleCloseRentReminderModal}
           onSave={handleSaveRentReminder}
+        />
+      )}
+
+      {isApplicationAgreementModalOpen && (
+        <ApplicationAgreementModal
+          onClose={handleCloseApplicationAgreementModal}
+          onSave={handleSaveApplicationAgreement}
+        />
+      )}
+
+      {isAboutPropertyModalOpen && (
+        <AboutPropertyModal
+          onClose={handleCloseAboutPropertyModal}
+          onSave={handleSaveAboutProperty}
+        />
+      )}
+
+      {isPetFeesModalOpen && (
+        <PetFeesModal
+          onClose={handleClosePetFeesModal}
+          onSave={handleSavePetFees}
         />
       )}
     </div>
