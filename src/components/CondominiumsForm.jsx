@@ -6,96 +6,12 @@ import RentReminderModal from "./RentReminderModal";
 import ApplicationAgreementModal from "./ApplicationAgreementModal";
 import AboutPropertyModal from "./AboutPropertyModal";
 import PetFeesModal from "./PetFeesModal";
+import AmenitiesModal from "./AmenitiesModal";
+import ParkingModal from "./ParkingModal";
+import NearestEducationalInstitutionModal from "./NearestEducationalInstitutionModal";
+import NearestStationModal from "./NearestStationModal";
 
 const CondominiumsForm = () => {
-  const [featuredPhoto, setFeaturedPhoto] = useState(null);
-  const [featuredPhotos, setFeaturedPhotos] = useState([]);
-  const [morePhotos, setMorePhotos] = useState([]);
-  const [video, setVideo] = useState(null);
-
-  // Modal states
-  const [isPropertyAddressModalOpen, setIsPropertyAddressModalOpen] =
-    useState(false);
-  const [isLeasingInfoModalOpen, setIsLeasingInfoModalOpen] = useState(false);
-  const [isChargesModalOpen, setIsChargesModalOpen] = useState(false);
-
-  // Data states
-  const [propertyAddress, setPropertyAddress] = useState(null);
-  const [leasingInfo, setLeasingInfo] = useState(null);
-  const [charges, setCharges] = useState(null);
-  const [isRentReminderModalOpen, setIsRentReminderModalOpen] = useState(false);
-  const [rentReminder, setRentReminder] = useState(null);
-
-  const [isApplicationAgreementModalOpen, setIsApplicationAgreementModalOpen] =
-    useState(false);
-  const [applicationAgreement, setApplicationAgreement] = useState(null);
-
-  const [isAboutPropertyModalOpen, setIsAboutPropertyModalOpen] =
-    useState(false);
-  const [aboutProperty, setAboutProperty] = useState(null);
-  const [isPetFeesModalOpen, setIsPetFeesModalOpen] = useState(false);
-  const [petFees, setPetFees] = useState(null);
-
-  const handlePhotoUpload = (file, index, type = "featured") => {
-    if (file) {
-      if (type === "featured") {
-        const newFeaturedPhotos = [...featuredPhotos];
-        newFeaturedPhotos[index] = file;
-        setFeaturedPhotos(newFeaturedPhotos);
-      } else {
-        const newMorePhotos = [...morePhotos];
-        newMorePhotos[index] = file;
-        setMorePhotos(newMorePhotos);
-      }
-    }
-  };
-
-  const UploadBox = ({
-    isLarge = false,
-    label = "",
-    subtext = "",
-    onChange,
-    hasFile = false,
-  }) => (
-    <div
-      className={`
-      ${isLarge ? "aspect-[4/3]" : "aspect-square"} 
-      border-2 border-dashed border-gray-300 rounded-lg 
-      flex flex-col justify-center items-center text-center text-gray-400 
-      relative hover:border-gray-400 transition-colors cursor-pointer
-      ${hasFile ? "bg-gray-50" : "bg-white"}
-      shadow-sm
-    `}
-    >
-      <input
-        type="file"
-        accept="image/*"
-        onChange={onChange}
-        className="absolute inset-0 opacity-0 cursor-pointer"
-      />
-      <div className="text-2xl mb-2">
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          className="mx-auto"
-        >
-          <path
-            d="M12 15V3m0 12l-4-4m4 4l4-4M2 17l.621 2.485A2 2 0 0 0 4.561 21h14.878a2 2 0 0 0 1.94-1.515L22 17"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      </div>
-      {label && (
-        <div className="text-sm font-medium text-gray-600 mb-1">{label}</div>
-      )}
-      {subtext && <div className="text-xs text-gray-400">{subtext}</div>}
-    </div>
-  );
 
   const leftFields = [
     ["Property address", true],
@@ -116,133 +32,242 @@ const CondominiumsForm = () => {
     ["Utilities provider"],
   ];
 
-  // Modal handlers
-  const handleOpenPropertyAddressModal = () => {
-    setIsPropertyAddressModalOpen(true);
-  };
+const UploadBox = ({
+  isLarge = false,
+  label = "",
+  subtext = "",
+  onChange,
+  hasFile = false,
+}) => (
+  <div
+    className={`
+      ${isLarge ? "aspect-[4/3]" : "aspect-square"} 
+      border-2 border-dashed border-gray-300 rounded-lg 
+      flex flex-col justify-center items-center text-center text-gray-400 
+      relative hover:border-gray-400 transition-colors cursor-pointer
+      ${hasFile ? "bg-gray-50" : "bg-white"}
+      shadow-sm
+    `}
+  >
+    <input
+      type="file"
+      accept="image/*"
+      onChange={onChange}
+      className="absolute inset-0 opacity-0 cursor-pointer"
+    />
+    <div className="text-2xl mb-2">
+      <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        className="mx-auto"
+      >
+        <path
+          d="M12 15V3m0 12l-4-4m4 4l4-4M2 17l.621 2.485A2 2 0 0 0 4.561 21h14.878a2 2 0 0 0 1.94-1.515L22 17"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    </div>
+    {label && (
+      <div className="text-sm font-medium text-gray-600 mb-1">{label}</div>
+    )}
+    {subtext && <div className="text-xs text-gray-400">{subtext}</div>}
+  </div>
+);
 
-  const handleClosePropertyAddressModal = () => {
-    setIsPropertyAddressModalOpen(false);
-  };
 
-  const handleOpenLeasingInfoModal = () => {
-    setIsLeasingInfoModalOpen(true);
-  };
+  // ---------- MEDIA STATES ----------
+const [featuredPhoto, setFeaturedPhoto] = useState(null);
+const [featuredPhotos, setFeaturedPhotos] = useState([]);
+const [morePhotos, setMorePhotos] = useState([]);
+const [video, setVideo] = useState(null);
 
-  const handleCloseLeasingInfoModal = () => {
-    setIsLeasingInfoModalOpen(false);
-  };
+// ---------- PROPERTY INFORMATION STATES ----------
+const [propertyAddress, setPropertyAddress] = useState(null);
+const [leasingInfo, setLeasingInfo] = useState(null);
+const [charges, setCharges] = useState(null);
+const [rentReminder, setRentReminder] = useState(null);
+const [applicationAgreement, setApplicationAgreement] = useState(null);
+const [aboutProperty, setAboutProperty] = useState(null);
+const [selectedAmenities, setSelectedAmenities] = useState([]);
+const [petFees, setPetFees] = useState(null);
+const [parkingInfo, setParkingInfo] = useState(null);
+const [educationalInstitution, setEducationalInstitution] = useState(null);
+const [nearestStation, setNearestStation] = useState(null);
 
-  // Add charges modal handlers
-  const handleOpenChargesModal = () => {
-    setIsChargesModalOpen(true);
-  };
+// ---------- MODAL STATES ----------
+const [isPropertyAddressModalOpen, setIsPropertyAddressModalOpen] = useState(false);
+const [isLeasingInfoModalOpen, setIsLeasingInfoModalOpen] = useState(false);
+const [isChargesModalOpen, setIsChargesModalOpen] = useState(false);
+const [isRentReminderModalOpen, setIsRentReminderModalOpen] = useState(false);
+const [isApplicationAgreementModalOpen, setIsApplicationAgreementModalOpen] = useState(false);
+const [isAboutPropertyModalOpen, setIsAboutPropertyModalOpen] = useState(false);
+const [isPetFeesModalOpen, setIsPetFeesModalOpen] = useState(false);
+const [isParkingModalOpen, setIsParkingModalOpen] = useState(false);
+const [isEducationalInstitutionModalOpen, setIsEducationalInstitutionModalOpen] = useState(false);
+const [isStationModalOpen, setIsStationModalOpen] = useState(false);
+const [showAmenitiesModal, setShowAmenitiesModal] = useState(false);
 
-  const handleCloseChargesModal = () => {
-    setIsChargesModalOpen(false);
-  };
+// ---------- MODAL HANDLERS ----------
+const handleOpenPropertyAddressModal = () => setIsPropertyAddressModalOpen(true);
+const handleClosePropertyAddressModal = () => setIsPropertyAddressModalOpen(false);
+const handleSaveAddress = (data) => setPropertyAddress(data);
 
-  // Save handlers
-  const handleSaveAddress = (addressData) => {
-    setPropertyAddress(addressData);
-  };
+const handleOpenLeasingInfoModal = () => setIsLeasingInfoModalOpen(true);
+const handleCloseLeasingInfoModal = () => setIsLeasingInfoModalOpen(false);
+const handleSaveLeasingInfo = (data) => setLeasingInfo(data);
 
-  const handleSaveLeasingInfo = (leasingData) => {
-    setLeasingInfo(leasingData);
-  };
+const handleOpenChargesModal = () => setIsChargesModalOpen(true);
+const handleCloseChargesModal = () => setIsChargesModalOpen(false);
+const handleSaveCharges = (data) => setCharges(data);
 
-  // Add charges save handler
-  const handleSaveCharges = (chargesData) => {
-    setCharges(chargesData);
-  };
+const handleOpenRentReminderModal = () => setIsRentReminderModalOpen(true);
+const handleCloseRentReminderModal = () => setIsRentReminderModalOpen(false);
+const handleSaveRentReminder = (data) => setRentReminder(data);
 
-  const handleOpenRentReminderModal = () => setIsRentReminderModalOpen(true);
-  const handleCloseRentReminderModal = () => setIsRentReminderModalOpen(false);
-  const handleSaveRentReminder = (data) => setRentReminder(data);
+const handleOpenApplicationAgreementModal = () => setIsApplicationAgreementModalOpen(true);
+const handleCloseApplicationAgreementModal = () => setIsApplicationAgreementModalOpen(false);
+const handleSaveApplicationAgreement = (data) => setApplicationAgreement(data);
 
-  const handleOpenApplicationAgreementModal = () =>
-    setIsApplicationAgreementModalOpen(true);
-  const handleCloseApplicationAgreementModal = () =>
-    setIsApplicationAgreementModalOpen(false);
-  const handleSaveApplicationAgreement = (data) =>
-    setApplicationAgreement(data);
-  const handleOpenAboutPropertyModal = () => setIsAboutPropertyModalOpen(true);
-  const handleCloseAboutPropertyModal = () =>
-    setIsAboutPropertyModalOpen(false);
-  const handleSaveAboutProperty = (text) => setAboutProperty(text);
+const handleOpenAboutPropertyModal = () => setIsAboutPropertyModalOpen(true);
+const handleCloseAboutPropertyModal = () => setIsAboutPropertyModalOpen(false);
+const handleSaveAboutProperty = (text) => setAboutProperty(text);
 
-  const handleOpenPetFeesModal = () => setIsPetFeesModalOpen(true);
-  const handleClosePetFeesModal = () => setIsPetFeesModalOpen(false);
-  const handleSavePetFees = (data) => setPetFees(data);
+const handleOpenPetFeesModal = () => setIsPetFeesModalOpen(true);
+const handleClosePetFeesModal = () => setIsPetFeesModalOpen(false);
+const handleSavePetFees = (data) => setPetFees(data);
 
-  // Helper function to determine which modal to open
-  const handleAddClick = (label) => {
-    switch (label) {
-      case "Property address":
-        handleOpenPropertyAddressModal();
-        break;
-      case "Leasing info":
-        handleOpenLeasingInfoModal();
-        break;
-      case "Charges": // Add this case
-        handleOpenChargesModal();
-        break;
-      case "Rent frequency & payment reminder":
-        handleOpenRentReminderModal();
-        break;
-      case "Application agreement":
-        handleOpenApplicationAgreementModal();
-        break;
-      case "About the property":
-        handleOpenAboutPropertyModal();
-        break;
-      case "Pet fees":
-        handleOpenPetFeesModal();
-        break;
+const handleOpenParkingModal = () => setIsParkingModalOpen(true);
+const handleCloseParkingModal = () => setIsParkingModalOpen(false);
+const handleSaveParking = (data) => setParkingInfo(data);
 
-      default:
-        // Handle other modals here in the future
-        console.log(`Opening modal for: ${label}`);
-        break;
+const handleOpenEducationalInstitutionModal = () => setIsEducationalInstitutionModalOpen(true);
+const handleCloseEducationalInstitutionModal = () => setIsEducationalInstitutionModalOpen(false);
+const handleSaveEducationalInstitution = (data) => setEducationalInstitution(data);
+
+const handleOpenStationModal = () => setIsStationModalOpen(true);
+const handleCloseStationModal = () => setIsStationModalOpen(false);
+const handleSaveStation = (data) => setNearestStation(data);
+
+const handleAmenitiesSave = (amenities) => setSelectedAmenities(amenities);
+
+// ---------- HELPER FUNCTIONS ----------
+const handlePhotoUpload = (file, index, type = "featured") => {
+  if (file) {
+    if (type === "featured") {
+      const newFeaturedPhotos = [...featuredPhotos];
+      newFeaturedPhotos[index] = file;
+      setFeaturedPhotos(newFeaturedPhotos);
+    } else {
+      const newMorePhotos = [...morePhotos];
+      newMorePhotos[index] = file;
+      setMorePhotos(newMorePhotos);
     }
-  };
+  }
+};
 
-  // Helper function to display saved data
-  const getDisplayText = (label) => {
-    switch (label) {
-      case "Property address":
-        return propertyAddress
-          ? `${propertyAddress.propertyName}, ${propertyAddress.streetAddress}`
-          : null;
-      case "Leasing info":
-        return leasingInfo
-          ? `${leasingInfo.leasingManagerName} - ${leasingInfo.leasingManagerEmail}`
-          : null;
-      case "Charges": // Add this case
-        return charges
-          ? `App fee: $${charges.applicationFee}, Admin fee: $${charges.adminFee}`
-          : null;
-      case "Rent frequency & payment reminder":
-        return rentReminder
-          ? `${rentReminder.frequency}, Reminder: ${rentReminder.reminderDate}, Due: ${rentReminder.dueDate}`
-          : null;
-      case "Application agreement":
-        return applicationAgreement
-          ? `${applicationAgreement.pdfFile?.name || "Agreement uploaded"}${
-              applicationAgreement.acceptInternational ? " (Accepts intl.)" : ""
-            }`
-          : null;
-      case "About the property":
-        return aboutProperty ? `${aboutProperty.slice(0, 40)}...` : null;
-      case "Pet fees":
-        return petFees
-          ? `${petFees.petType}, Fee: ${petFees.oneTimeFee}, Deposit: ${petFees.securityDeposit}, Rent: ${petFees.monthlyRent}`
-          : null;
+const handleAddClick = (label) => {
+  switch (label) {
+    case "Property address":
+      handleOpenPropertyAddressModal();
+      break;
+    case "Leasing info":
+      handleOpenLeasingInfoModal();
+      break;
+    case "Charges":
+      handleOpenChargesModal();
+      break;
+    case "Rent frequency & payment reminder":
+      handleOpenRentReminderModal();
+      break;
+    case "Application agreement":
+      handleOpenApplicationAgreementModal();
+      break;
+    case "About the property":
+      handleOpenAboutPropertyModal();
+      break;
+    case "Community's amenity/features":
+      setShowAmenitiesModal(true);
+      break;
+    case "Pet fees":
+      handleOpenPetFeesModal();
+      break;
+    case "Parking":
+      handleOpenParkingModal();
+      break;
+    case "Nearest educational institution":
+      handleOpenEducationalInstitutionModal();
+      break;
+    case "Nearest stations":
+      handleOpenStationModal();
+      break;
+    default:
+      console.log(`Opening modal for: ${label}`);
+      break;
+  }
+};
 
-      default:
-        return null;
-    }
-  };
+const getDisplayText = (label) => {
+  switch (label) {
+    case "Property address":
+      return propertyAddress
+        ? `${propertyAddress.propertyName}, ${propertyAddress.streetAddress}`
+        : null;
+    case "Leasing info":
+      return leasingInfo
+        ? `${leasingInfo.leasingManagerName} - ${leasingInfo.leasingManagerEmail}`
+        : null;
+    case "Charges":
+      return charges
+        ? `App fee: $${charges.applicationFee}, Admin fee: $${charges.adminFee}`
+        : null;
+    case "Rent frequency & payment reminder":
+      return rentReminder
+        ? `${rentReminder.frequency}, Reminder: ${rentReminder.reminderDate}, Due: ${rentReminder.dueDate}`
+        : null;
+    case "Application agreement":
+      return applicationAgreement
+        ? `${applicationAgreement.pdfFile?.name || "Agreement uploaded"}${
+            applicationAgreement.acceptInternational ? " (Accepts intl.)" : ""
+          }`
+        : null;
+    case "About the property":
+      return aboutProperty ? `${aboutProperty.slice(0, 40)}...` : null;
+    case "Community's amenity/features":
+      return selectedAmenities.length > 0
+        ? `${selectedAmenities.length} amenity${
+            selectedAmenities.length !== 1 ? "ies" : ""
+          } selected`
+        : null;
+    case "Pet fees":
+      return petFees
+        ? `${petFees.petType}, Fee: ${petFees.oneTimeFee}, Deposit: ${petFees.securityDeposit}, Rent: ${petFees.monthlyRent}`
+        : null;
+    case "Parking":
+      return parkingInfo
+        ? `Time: ${parkingInfo.guestParkingTime}, Note: ${parkingInfo.overview.slice(
+            0,
+            30
+          )}...`
+        : null;
+    case "Nearest educational institution":
+      return educationalInstitution
+        ? `${educationalInstitution.name} (${educationalInstitution.distance} ${educationalInstitution.unit})`
+        : null;
+    case "Nearest stations":
+      return nearestStation
+        ? `${nearestStation.name} (${nearestStation.distance} ${nearestStation.unit})`
+        : null;
+    default:
+      return null;
+  }
+};
+
+
 
   return (
     <div className="min-h-screen bg-white p-10">
@@ -433,7 +458,6 @@ const CondominiumsForm = () => {
         />
       )}
 
-      {/* Add ChargesModal */}
       {isChargesModalOpen && (
         <ChargesModal
           onClose={handleCloseChargesModal}
@@ -466,6 +490,35 @@ const CondominiumsForm = () => {
         <PetFeesModal
           onClose={handleClosePetFeesModal}
           onSave={handleSavePetFees}
+        />
+      )}
+
+      {showAmenitiesModal && (
+        <AmenitiesModal
+          onClose={() => setShowAmenitiesModal(false)}
+          onSave={handleAmenitiesSave}
+          selectedAmenities={selectedAmenities.map((a) => a.id)}
+        />
+      )}
+
+      {isParkingModalOpen && (
+        <ParkingModal
+          onClose={() => setIsParkingModalOpen(false)}
+          onSave={(data) => setParkingInfo(data)}
+          initialData={parkingInfo}
+        />
+      )}
+      {isEducationalInstitutionModalOpen && (
+        <NearestEducationalInstitutionModal
+          onClose={handleCloseEducationalInstitutionModal}
+          onSave={handleSaveEducationalInstitution}
+        />
+      )}
+
+      {isStationModalOpen && (
+        <NearestStationModal
+          onClose={handleCloseStationModal}
+          onSave={handleSaveStation}
         />
       )}
     </div>
