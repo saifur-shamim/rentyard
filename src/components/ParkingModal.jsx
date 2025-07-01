@@ -19,9 +19,9 @@ const ParkingModal = ({ onClose, onSave, initialData }) => {
         {/* Header */}
         <div className="flex justify-between items-center border-b pb-3 mb-6">
           <h3 className="text-lg font-semibold text-gray-800">Parking</h3>
-          <button
-            className="text-gray-400 hover:text-gray-600 text-2xl"
+       <button
             onClick={onClose}
+            className="text-gray-400 hover:text-gray-600 text-4xl w-10 h-10 flex items-center justify-center"
           >
             ×
           </button>

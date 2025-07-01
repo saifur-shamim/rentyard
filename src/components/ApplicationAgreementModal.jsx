@@ -30,7 +30,7 @@ const ApplicationAgreementModal = ({ onClose, onSave }) => {
           </h2>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-600 text-3xl font-extrabold leading-none"
+            className="text-gray-400 hover:text-gray-600 text-4xl w-10 h-10 flex items-center justify-center"
           >
             ×
           </button>

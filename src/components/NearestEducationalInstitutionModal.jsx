@@ -34,7 +34,7 @@ const NearestEducationalInstitutionModal = ({ onClose, onSave }) => {
           </h2>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-600 text-3xl font-extrabold leading-none"
+            className="text-gray-400 hover:text-gray-600 text-4xl w-10 h-10 flex items-center justify-center"
           >
             ×
           </button>
@@ -46,7 +46,8 @@ const NearestEducationalInstitutionModal = ({ onClose, onSave }) => {
           <div className="grid grid-cols-2 gap-6">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Educational institution type<span className="text-red-500">*</span>
+                Educational institution type
+                <span className="text-red-500">*</span>
               </label>
               <select
                 value={institutionType}
@@ -91,7 +92,8 @@ const NearestEducationalInstitutionModal = ({ onClose, onSave }) => {
           {/* Row 2: Name */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Educational institution name<span className="text-red-500">*</span>
+              Educational institution name
+              <span className="text-red-500">*</span>
             </label>
             <input
               type="text"

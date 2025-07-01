@@ -27,7 +27,7 @@ const RentReminderModal = ({ onClose, onSave }) => {
       className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
       onClick={handleOverlayClick}
     >
-      <div className="bg-white rounded-lg shadow-lg w-full max-w-2xl mx-4">
+      <div className="bg-white rounded-lg shadow-lg w-full max-w-[740px] mx-4">
         {/* Header */}
         <div className="flex justify-between items-center p-6 border-b">
           <h2 className="text-lg font-semibold text-gray-900">
@@ -35,24 +35,24 @@ const RentReminderModal = ({ onClose, onSave }) => {
           </h2>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-600 text-3xl font-extrabold leading-none"
+            className="text-gray-400 hover:text-gray-600 text-4xl w-10 h-10 flex items-center justify-center"
           >
             ×
           </button>
         </div>
 
         {/* Content */}
-        <div className="p-6">
-          <div className="grid grid-cols-3 gap-4">
+        <div className="p-5">
+          <div className="grid grid-cols-3 gap-2">
             {/* Frequency */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Rent payment frequency*
+                Rent payment frequency<span className="text-red-500">*</span>
               </label>
               <select
                 value={frequency}
                 onChange={(e) => setFrequency(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full h-[42px] px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               >
                 <option value="" disabled>
                   Monthly
@@ -66,13 +66,14 @@ const RentReminderModal = ({ onClose, onSave }) => {
             {/* Reminder Date */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Rent reminder/statement date*
+                Rent reminder/statement date
+                <span className="text-red-500">*</span>
               </label>
               <input
                 type="date"
                 value={reminderDate}
                 onChange={(e) => setReminderDate(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full h-[42px] px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 placeholder="25th every month"
               />
             </div>
@@ -80,13 +81,13 @@ const RentReminderModal = ({ onClose, onSave }) => {
             {/* Due Date */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Rent due date*
+                Rent due date<span className="text-red-500">*</span>
               </label>
               <input
                 type="date"
                 value={dueDate}
                 onChange={(e) => setDueDate(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full h-[42px] px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 placeholder="5th every month"
               />
             </div>

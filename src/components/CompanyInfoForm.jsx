@@ -32,10 +32,11 @@ const CompanyInfoForm = ({
     <div className="border rounded-lg p-4 bg-gray-50 mb-6">
       <h3 className="font-semibold mb-4">Company & office info</h3>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
+       
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
-            Company name<span className="text-red-500">*</span>
+            Company name<span className="text-black text-xl">*</span>
           </label>
           <input
             type="text"
@@ -47,7 +48,8 @@ const CompanyInfoForm = ({
 
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
-            Company Identifier (EIN/TIN)<span className="text-red-500">*</span>
+            Company Identifier (EIN/TIN)
+            <span className="text-black text-xl">*</span>
           </label>
           <input
             type="text"
@@ -59,7 +61,7 @@ const CompanyInfoForm = ({
 
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
-            Your job title<span className="text-red-500">*</span>
+            Your job title<span className="text-black text-xl">*</span>
           </label>
           <input
             type="text"
@@ -71,19 +73,44 @@ const CompanyInfoForm = ({
 
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
-            Agreement with landlord/owner<span className="text-red-500">*</span>
+            Agreement with landlord/owner
+            <span className="text-black text-xl">*</span>
           </label>
+
+          <label
+            htmlFor="landlord-agreement"
+            className="w-full max-w-[430px] h-10 flex flex-col justify-center items-center text-gray-500 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 transition"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6 mb-1"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1M12 12v8m0-8l-4 4m4-4l4 4M12 4v4"
+              />
+            </svg>
+            <span className="text-sm">(Pdf only)</span>
+          </label>
+
           <input
+            id="landlord-agreement"
             type="file"
             accept=".pdf"
             onChange={(e) => setLandlordAgreement(e.target.files[0])}
-            className="w-full p-2 border border-dashed rounded"
+            className="hidden"
           />
         </div>
 
+        {/* Next row */}
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
-            Country/Region<span className="text-red-500">*</span>
+            Country/Region<span className="text-black text-xl">*</span>
           </label>
           <select
             value={country}
@@ -99,7 +126,7 @@ const CompanyInfoForm = ({
 
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
-            Street address<span className="text-red-500">*</span>
+            Street address<span className="text-black text-xl">*</span>
           </label>
           <input
             type="text"
@@ -110,7 +137,7 @@ const CompanyInfoForm = ({
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-sm font-medium text-gray-700 mb-1 mt-2">
             Apt, suit, unit (if applicable)
           </label>
           <input
@@ -123,7 +150,7 @@ const CompanyInfoForm = ({
 
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
-            Phone number<span className="text-red-500">*</span>
+            Phone number<span className="text-black text-xl">*</span>
           </label>
           <input
             type="tel"
@@ -133,9 +160,10 @@ const CompanyInfoForm = ({
           />
         </div>
 
+        {/* Next row */}
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
-            Contact email<span className="text-red-500">*</span>
+            Contact email<span className="text-black text-xl">*</span>
           </label>
           <input
             type="email"
@@ -147,7 +175,7 @@ const CompanyInfoForm = ({
 
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
-            City/Town<span className="text-red-500">*</span>
+            City/Town<span className="text-black text-xl">*</span>
           </label>
           <input
             type="text"
@@ -159,7 +187,7 @@ const CompanyInfoForm = ({
 
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
-            State/Territory<span className="text-red-500">*</span>
+            State/Territory<span className="text-black text-xl">*</span>
           </label>
           <select
             value={state}
@@ -175,7 +203,7 @@ const CompanyInfoForm = ({
 
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
-            Zip code<span className="text-red-500">*</span>
+            Zip code<span className="text-black text-xl">*</span>
           </label>
           <input
             type="text"

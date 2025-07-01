@@ -31,11 +31,11 @@ const PropertyAddressModal = ({ onClose, onSave }) => {
       <div className="bg-white p-6 rounded-lg w-full max-w-4xl relative">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-lg font-medium text-gray-900">Property addresss</h2>
-          <button
+         <button
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-600 text-2xl"
+            className="text-gray-400 hover:text-gray-600 text-4xl w-10 h-10 flex items-center justify-center"
           >
-            X
+            ×
           </button>
         </div>
         

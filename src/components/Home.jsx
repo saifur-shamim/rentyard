@@ -46,14 +46,15 @@ const Home = () => {
     <div className="min-h-screen bg-gray-50 p-8">
       <div className="w-full bg-white shadow rounded-lg p-6">
         <header className="flex justify-between items-center mb-8">
-          <h1 className="text-2xl font-bold text-blue-600">🏠 RentYard</h1>
+          <img src="/img/image 4.png" alt="RentYard Logo" className="h-10" />
+
           <button className="px-4 py-2 bg-gray-100 rounded hover:bg-gray-200">
             Exit
           </button>
         </header>
 
         {/* Property Type Selection */}
-        <section className="mb-8">
+        <section className="mb-8 mt-10">
           <h2 className="text-xl font-semibold mb-4">Property type</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {propertyOptions.map((item, idx) => (
@@ -135,31 +136,10 @@ const Home = () => {
           />
         )}
 
-        {/* Action Buttons */}
         <div className="flex justify-between items-center">
-          <button className="text-blue-600 underline">Back</button>
+          <button className="text-black-600 underline">Back</button>
 
-          <button
-            className={`px-6 py-2 rounded text-white ${
-              propertyType &&
-              role &&
-              ((role === "Landlord" && file && termsAccepted) ||
-                (role === "Realtor" &&
-                  lenienceNumber &&
-                  landlordAgreement &&
-                  termsAccepted) ||
-                role === "Property management company")
-                ? "bg-blue-600 hover:bg-blue-700"
-                : "bg-blue-300 cursor-not-allowed"
-            }`}
-            disabled={
-              !propertyType ||
-              !role ||
-              (role === "Landlord" && (!file || !termsAccepted)) ||
-              (role === "Realtor" &&
-                (!lenienceNumber || !landlordAgreement || !termsAccepted))
-            }
-          >
+          <button className="px-6 py-2 rounded text-white bg-blue-600 hover:bg-blue-700">
             Get started
           </button>
         </div>
